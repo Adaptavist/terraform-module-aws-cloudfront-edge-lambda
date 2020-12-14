@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "outDir": "./dist",
+    "strict": true,
+    "baseUrl": "./",
+    "typeRoots": ["node_modules/@types"],
+    "types": ["node"],
+    "esModuleInterop": true,
+    "inlineSourceMap": true,
+    "lib": ["es2015", "dom"]
+  },
+  "include": ["src/**/*"],
+}
