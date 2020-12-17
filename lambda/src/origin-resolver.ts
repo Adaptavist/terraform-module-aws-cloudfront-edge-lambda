@@ -25,7 +25,7 @@ export default class OriginResolver {
         }
 
         if(!token && headers[OriginResolver.JWT_HEADER_KEY.toLowerCase()]) {
-            const value = headers[OriginResolver.JWT_HEADER_KEY.toLowerCase()].values().next().value()
+            const value = headers[OriginResolver.JWT_HEADER_KEY.toLowerCase()].values().next().value.value
             token = value.substr(value.indexOf(OriginResolver.AUTH_SCHEME_KEY) + OriginResolver.AUTH_SCHEME_KEY.length, value.length);
         }
 

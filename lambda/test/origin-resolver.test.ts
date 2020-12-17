@@ -28,6 +28,46 @@ describe('`Ensure exception thrown when no token found`', () => {
   });
 });
 
+describe('`Ensure exception thrown when no token found in empty URL parameter`', () => {
+
+  it('should throw an exception', () => {
+
+    const queryString = '/my-service/someendpoint.do?jwt='
+
+    const headers: CloudFrontHeaders =  {
+      ["content-type"]: [{
+        key: 'Content-Type',
+        value: 'application/json'
+      }]
+    }
+
+    const result = function () {originResolver.extractJWT(headers, queryString)}
+    expect(result).to.throw("Could not find JWT token!")
+  });
+});
+
+describe('`Ensure exception thrown when no token found in empty HTTP header`', () => {
+
+  it('should throw an exception', () => {
+
+    const queryString = '/my-service/someendpoint.do'
+
+    const headers: CloudFrontHeaders =  {
+      ["content-type"]: [{
+      key: 'Content-Type',
+      value: 'application/json'
+    }],
+      ["authorization"]: [{
+      key: 'Authorization',
+      value: ''
+    }],
+    }
+
+    const result = function () {originResolver.extractJWT(headers, queryString)}
+    expect(result).to.throw("Could not find JWT token!")
+  });
+});
+
 
 describe('`Extract JWT from URL query, first parameter`', () => {
 
@@ -52,7 +92,7 @@ describe('`Extract JWT from URL query, not first parameter`', () => {
 
   it('should return jwt token', () => {
 
-    const queryString = '/my-service/someendpoint?someOtherQueryParameter=test&jwt=\n' + jwt + '&name=test'
+    const queryString = '/my-service/someendpoint?someOtherQueryParameter=test&jwt=' + jwt + '&name=test'
 
     const headers: CloudFrontHeaders =  {
       ["content-type"]: [{
@@ -70,7 +110,7 @@ describe('`Extract JWT from URL query, last parameter`', () => {
 
   it('should return jwt token', () => {
 
-    const queryString = '/my-service/someendpoint?someOtherQueryParameter=test&jwt=\n' + jwt + '&name=test'
+    const queryString = '/my-service/someendpoint?someOtherQueryParameter=test&jwt=' + jwt + '&name=test'
 
     const headers: CloudFrontHeaders =  {
       ["content-type"]: [{
@@ -107,7 +147,7 @@ describe('`Extract JWT from URL query - escaped coded chars`', () => {
 
   it('should return jwt token', () => {
 
-    const queryString = '/my-service/someendpoint?someOtherQueryParameter=%20test%20%3C&jwt=\n'+ jwt + ''
+    const queryString = '/my-service/someendpoint?someOtherQueryParameter=%20test%20%3C&jwt='+ jwt + ''
 
     const headers: CloudFrontHeaders =  {
       ["content-type"]: [{
