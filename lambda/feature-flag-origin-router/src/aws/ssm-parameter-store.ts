@@ -7,7 +7,7 @@ const SSM_PATH_PARAM_REGION = "us-east-1"
 
 export default class SsmParameterStore implements IParameterStore {
 
-    private static SSM: AWS.SSM;
+    static SSM: AWS.SSM;
 
     constructor() {
         if(!SsmParameterStore.SSM) {
@@ -26,5 +26,4 @@ export default class SsmParameterStore implements IParameterStore {
             return result.Parameter!.Value!
         })
     }
-
 }
