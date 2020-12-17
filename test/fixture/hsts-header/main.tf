@@ -62,7 +62,7 @@ module cf_distro {
 
   acm_cert_arn = data.aws_acm_certificate.cert.arn
 
-   default_cache_behavior = {
+  default_cache_behavior = {
     origin_id       = "scriptrunner"
     domain_name     = "sr-cloud-test.connect.adaptavist.com"
     allowed_methods = local.default_allowed_methods
@@ -74,12 +74,12 @@ module cf_distro {
       domain_name     = "sr-cloud-test.connect.adaptavist.com"
       path_pattern    = "/latest/*"
       allowed_methods = local.default_allowed_methods
-    }   
+    }
   }
 
-  lambda_dist_dir = "../../../lambda/hsts-header/"
-  lambda_code_dir = "../../../lambda/hsts-header/"
-  lambda_name     = "cloud-front-hsts-header-${random_string.random.result}"
+  lambda_dist_dir      = "../../../lambda/hsts-header/"
+  lambda_code_dir      = "../../../lambda/hsts-header/"
+  lambda_name          = "cloud-front-hsts-header-${random_string.random.result}"
   lambda_cf_event_type = "origin-response"
 }
 
@@ -116,5 +116,5 @@ data "aws_iam_policy_document" "lambda_exec_role_policy_document" {
 
     resources = ["*"]
   }
-  
+
 }
