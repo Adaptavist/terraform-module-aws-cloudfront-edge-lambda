@@ -12,6 +12,7 @@ import OriginResolver from "./origin-resolver";
 import FeatureFlagOriginProvider from "./feature-flags/feature-flag-origin-provider";
 import LdFeatureFlagResolver from "./feature-flags/ld-feature-flag-resolver";
 import {CloudFrontOrigin} from "aws-lambda/common/cloudfront";
+import log from 'lambda-log';
 
 const SR_LEGACY_DOMAIN_SSM_PATH = "/sr/legacy-root-domain"
 const SR_FEATURE_FLAG_SSM_PATH = "/sr/feature-flag"
@@ -33,12 +34,12 @@ export const handler: CloudFrontRequestHandler = async (event: CloudFrontRequest
     const headers = request.headers;
     const origin:CloudFrontOrigin | undefined = request.origin;
 
-    console.info('URI : ' + request.uri);
-    console.info('headers : ' + JSON.stringify(headers));
-    console.info('query string : ' + request.querystring);
+    log.info('URI : ' + request.uri);
+    log.info('headers : ' + JSON.stringify(headers));
+    log.info('query string : ' + request.querystring);
 
     if(!origin) {
-        console.warn('No origin was found, returning prematurely');
+        log.warn('No origin was found, returning prematurely');
         return
     }
 
@@ -53,18 +54,18 @@ export const handler: CloudFrontRequestHandler = async (event: CloudFrontRequest
 }
 
 async function initRouterProvider() : Promise<FeatureFlagOriginProvider>{
-    console.log('Init called...')
+    log.info('Init called...')
     const results = await Promise.all([ldSdkKey, srLegacyDomain, srDomain, featureFlag]);
     const sdkKey = results[0];
     const defaultDomain = results[1];
 
     // We route to this domain when the feature flag is true
     const domain = results[2];
-    console.info('default domain : ' + defaultDomain);
-    console.info('domain : ' + domain);
+    log.info('default domain : ' + defaultDomain);
+    log.info('domain : ' + domain);
     const targetFeatureFlag = results[3];
 
-    console.info('targetFeatureFlag : ' + targetFeatureFlag);
+    log.info('targetFeatureFlag : ' + targetFeatureFlag);
 
     return new FeatureFlagOriginProvider(new LdFeatureFlagResolver(sdkKey), defaultDomain, domain, targetFeatureFlag);
 }
