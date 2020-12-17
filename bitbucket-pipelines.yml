@@ -6,10 +6,10 @@ definitions:
       - (echo ${PIPELINE_GIT_PRIVATE_KEY} | base64 -d >> ~/.ssh/id_rsa) && chmod 0600 ~/.ssh/id_rsa
       - terraform fmt -check -recursive -diff
 
-  edge-router-lambda-tests: &edge-router-lambda-tests
-    name: Edge Lambda Tests    
+  router-lambda-unit-tests: &router-lambda-unit-tests
+    name: Router edge Lambda Tests    
     script:
-      - (cd lambda && npm install && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" npm test)
+      - (cd lambda/feature-flag-origin-router && npm install && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" npm test)
 
   intergration-tests: &intergration-tests
     name: Integration Tests    
@@ -20,9 +20,13 @@ definitions:
   compliance: &compliance
     name: Compliance    
     script:
-      - (cd test/fixture && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform init -backend-config="key=modules/module-aws-cloudfront-router/tests/fixures/default/compliance-test.tfstate")
-      - (cd test/fixture && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform plan -out=plan.out)
-      - (cd test/fixture && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform-compliance -f git:https://github.com/Adaptavist/terraform-compliance.git -p plan.out)
+      - (cd test/fixture/feature-flag-origin-router && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform init -backend-config="key=modules/module-aws-cloudfront-router/tests/fixures/default/compliance-test.tfstate")
+      - (cd test/fixture/feature-flag-origin-router && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform plan -out=plan.out)
+      - (cd test/fixture/feature-flag-origin-router && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform-compliance -f git:https://github.com/Adaptavist/terraform-compliance.git -p plan.out)
+      - (cd test/fixture/hsts-header && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform init -backend-config="key=modules/module-aws-cloudfront-router/tests/fixures/default/compliance-test.tfstate")
+      - (cd test/fixture/hsts-header && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform plan -out=plan.out)
+      - (cd test/fixture/hsts-header && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform-compliance -f git:https://github.com/Adaptavist/terraform-compliance.git -p plan.out)
+
 
   release: &release
     name: Release
@@ -37,12 +41,12 @@ pipelines:
   default:
     - step: *check
     - step: *compliance
-    - step: *edge-lambda-tests
+    - step: *router-lambda-unit-tests
     - step: *intergration-tests
   branches:
     master:
       - step: *check
       - step: *compliance
-      - step: *edge-lambda-tests
+      - step: *router-lambda-unit-tests
       - step: *intergration-tests
       - step: *release
