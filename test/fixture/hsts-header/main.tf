@@ -66,9 +66,10 @@ module cf_distro {
     origin_id       = "scriptrunner"
     domain_name     = "sr-cloud-test.connect.adaptavist.com"
     allowed_methods = local.default_allowed_methods
+    static_backend  = false
   }
 
-  origin_mappings = {
+  custom_origin_mappings = {
     scriptrunner = {
       origin_id       = "scriptrunner"
       domain_name     = "sr-cloud-test.connect.adaptavist.com"
@@ -81,6 +82,13 @@ module cf_distro {
   lambda_code_dir      = "../../../lambda/hsts-header/"
   lambda_name          = "cloud-front-hsts-header-${random_string.random.result}"
   lambda_cf_event_type = "origin-response"
+
+  min_ttl     = 0
+  default_ttl = 0
+  max_ttl     = 0
+
+  domain        = "*.${local.tld}"
+  r53_zone_name = local.tld
 }
 
 resource "aws_route53_record" "www" {
