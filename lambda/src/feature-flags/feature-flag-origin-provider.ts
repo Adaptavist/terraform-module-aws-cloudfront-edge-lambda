@@ -3,16 +3,16 @@ import {IOriginProvider} from "../aws/origin-provider";
 
 export default class FeatureFlagOriginProvider implements IOriginProvider{
 
-    private readonly defaultDomain;
-    private readonly flagEnabledDomain;
-    private readonly flagResolver;
-    private readonly featureFlag;
+    readonly defaultDomain;
+    readonly flagEnabledDomain;
+    readonly flagResolver;
+    readonly featureFlag;
 
     constructor(flagResolver: IFeatureFlagResolver, defaultDomain: string, flagEnabledDomain: string, featureFlag : string) {
 
         this.defaultDomain = defaultDomain;
         this.flagEnabledDomain = flagEnabledDomain;
-        this.flagResolver = flagResolver;         
+        this.flagResolver = flagResolver;
         this.featureFlag = featureFlag
     }
 
@@ -20,13 +20,7 @@ export default class FeatureFlagOriginProvider implements IOriginProvider{
 
         const flag = await this.flagResolver.resolveFlag(clientId, this.featureFlag);
 
-        let targetDomain = '';
-
-        if (flag) {
-            targetDomain = this.flagEnabledDomain;
-        } else {
-            targetDomain = this.defaultDomain;
-        }
+        const targetDomain = flag ? this.flagEnabledDomain : this.defaultDomain;
 
         console.info(`Determined the origin ${targetDomain} for the client id ${clientId}`);
         return targetDomain;

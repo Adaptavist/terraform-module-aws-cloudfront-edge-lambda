@@ -4,7 +4,7 @@ import {IFeatureFlagResolver} from "./feature-flag-resolver";
 
 export default class LdFeatureFlagResolver implements IFeatureFlagResolver{
 
-    private static LD_CLIENT: LDClient
+    static LD_CLIENT: LDClient
 
     constructor(sdkKey: string) {
 
@@ -25,14 +25,14 @@ export default class LdFeatureFlagResolver implements IFeatureFlagResolver{
         try {
             const detail = await LdFeatureFlagResolver.LD_CLIENT
                 .variationDetail(flag, user, false);
-            
+
             console.info(`Got the flag ${flag} for the client id ${clientId}`);
             console.info(`flag value : ${detail.value}`);
             console.info(`reason kind : ${detail.reason.kind}`);
             console.info(`reason rule id : ${detail.reason.ruleId}`);
             console.info(`reason rule index : ${detail.reason.ruleIndex}`);
             console.info(`reason error kind : ${detail.reason.errorKind}`);
-            
+
             return detail.value;
         } catch (err) {
             console.error(`A bad thing happened when trying to get flag : ${flag} for the client id ${clientId}`);

@@ -134,6 +134,9 @@ data "aws_iam_policy_document" "lambda_exec_role_policy_document" {
       "ssm:*",
     ]
 
-    resources = ["arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/sr/*"]
+    resources = [
+      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/sr/*",
+      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/launch-darkly/*"
+    ]
   }
 }

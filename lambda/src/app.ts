@@ -56,7 +56,7 @@ async function initRouterProvider() : Promise<FeatureFlagOriginProvider>{
     console.log('Init called...')
     const results = await Promise.all([ldSdkKey, srLegacyDomain, srDomain, featureFlag]);
     const sdkKey = results[0];
-    const defaultDomain = results[1];    
+    const defaultDomain = results[1];
 
     // We route to this domain when the feature flag is true
     const domain = results[2];
@@ -71,7 +71,13 @@ async function initRouterProvider() : Promise<FeatureFlagOriginProvider>{
 
 async function processRequest(headers: CloudFrontHeaders, request: CloudFrontRequest, origin: CloudFrontOrigin): Promise<CloudFrontRequestResult> {
     const targetDomain = await originResolver.determineOriginDomain(headers, request.querystring);
-    origin!.custom!.domainName = targetDomain;
+
+    if(origin.custom) {
+        origin.custom.domainName = targetDomain;
+    } else if(origin.s3) {
+        origin.s3.domainName = targetDomain;
+    }
+
     request.origin = origin;
 
     return request;

@@ -114,29 +114,3 @@ module "aws-lambda" {
 
   depends_on = [null_resource.lambda_build]
 }
-
-resource "aws_iam_role_policy" "lambda_exec_role_policy" {
-  name = "edge_lambda_role_policy"
-  role = module.aws-lambda.lambda_role_name
-
-  policy = <<-EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": [     
-          "logs:*",
-          "ssm:*",
-          "lambda:GetFunction",
-          "lambda:EnableReplication*",
-          "iam:CreateServiceLinkedRole",
-          "cloudfront:UpdateDistribution",
-          "cloudfront:CreateDistribution"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      }
-    ]
-  }
-  EOF
-}

@@ -53,7 +53,7 @@ func TestModule(t *testing.T) {
 		TerraformDir: "fixture",
 	}
 	// setup TF stack
-	//defer destroyInfra(terraformOptions, t)
+	defer destroyInfra(terraformOptions, t)
 
 	terraform.InitAndApply(t, terraformOptions)
 
