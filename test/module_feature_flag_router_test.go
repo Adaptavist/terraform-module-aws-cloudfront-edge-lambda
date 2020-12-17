@@ -1,20 +1,17 @@
 package test
 
 import (
-	"io/ioutil"
-	"math/rand"
+	"io/ioutil"	
 	"net/http"
 	"net/url"
 	"os"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
 
-var seededRand = rand.New(rand.NewSource(time.Now().UnixNano()))
 var assumeRoleArn = os.Getenv("SANDBOX_ORG_ROLE_ARN")
 
 const region = "us-east-1"
@@ -28,45 +25,18 @@ const testJwtUserA = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJiNDRkNTI4Y
 //client id dec00c86-3a15-11eb-adc1-0242ac120002
 const testJwtUserB = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJkZWMwMGM4Ni0zYTE1LTExZWItYWRjMS0wMjQyYWMxMjAwMDIiLCJpYXQiOjE2MDc5MzY2NzksImV4cCI6MTYzOTQ3MjY3OSwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXX0.gQO5WVG0hiM6RBttBr_5gaBdtYW-ZV1_VuWf9mY6c0w"
 
-func RandomString(length int) string {
-	charset := "abcdefghijklmnopqrstuvwxyz"
-	b := make([]byte, length)
-	for i := range b {
-		b[i] = charset[seededRand.Intn(len(charset))]
-	}
-	return string(b)
-}
-
-// TestModule - Our test entry point
-func TestModule(t *testing.T) {
+// TestRouterModule - Our test entry point
+func TestRouterModule(t *testing.T) {
 
 	postfix := RandomString(8)
 
 	// Terraforming
-	terraformOptions := &terraform.Options{
-		NoColor: true,
-		Lock:    true,
-		BackendConfig: map[string]interface{}{
-			"key":      "modules/module-aws-cloudfront-router-edge-lambda/tests/fixures/default/" + postfix,
-			"role_arn": assumeRoleArn,
-		},
-		TerraformDir: "fixture",
-	}
-	// setup TF stack
-	//defer destroyInfra(terraformOptions, t)
+	terraformOptions := generateTerraformOptions(assumeRoleArn, postfix, "feature-flag-origin-router")	
+	defer destroyInfra(&terraformOptions, t)
+	terraform.InitAndApply(t, &terraformOptions)
 
-	terraform.InitAndApply(t, terraformOptions)
-
-	outputs := terraform.OutputAll(t, terraformOptions)
-
-	// assert outputs are wired
-	assert.NotNil(t, outputs["cf_id"])
-	assert.NotNil(t, outputs["cf_arn"])
-	assert.NotNil(t, outputs["cf_status"])
-	assert.NotNil(t, outputs["cf_domain_name"])
-	assert.NotNil(t, outputs["cf_etag"])
-	assert.NotNil(t, outputs["cf_hosted_zone_id"])
-	assert.NotNil(t, outputs["public_domain_name"])
+	outputs := terraform.OutputAll(t, &terraformOptions)
+	assertModuleOutputs(t, outputs)
 
 	publicDomainName := outputs["public_domain_name"].(string)
 
@@ -115,16 +85,4 @@ func testBody(testValue string, testURL string, headers map[string][]string, t *
 
 	bodyString := string(bodyBytes)
 	assert.True(t, strings.Contains(bodyString, testValue), testURL+" should contain the value "+testValue)
-}
-
-func destroyInfra(terraformOptions *terraform.Options, t *testing.T) {
-	/*
-		Destroy will fail because of https://forums.aws.amazon.com/thread.jspa?threadID=331402 (IaC tools cannot tidy up Edge Lambdas)
-		so we have to get creative when it comes to tidying up replicated lambdas.
-		We do not need to delete the lambdas, as they are associated with a CloudFront distribution, we can remove the state from Terraforms remote state.
-		Then when Terraform destroys the CloudFront distro the Lambdas will get cleaned up as part of that.
-	*/
-	terraform.RunTerraformCommand(t, terraformOptions, "state", "rm", "module.cf_distro.module.aws-lambda.aws_lambda_function.this")
-
-	terraform.Destroy(t, terraformOptions)
 }

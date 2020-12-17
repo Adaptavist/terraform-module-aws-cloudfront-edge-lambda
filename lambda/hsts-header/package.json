@@ -1,0 +1,11 @@
+{
+  "name": "lambda-hsts-header",
+  "version": "1.0.0",
+  "description": "A CloudFront Edge Lambda which added HSTS header to responses",
+  "main": "app.js",
+  "author": "",
+  "scripts": {
+    "build": ""
+  },
+  "license": "ISC"
+}

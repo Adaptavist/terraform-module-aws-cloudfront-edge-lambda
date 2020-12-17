@@ -51,7 +51,7 @@ resource "random_string" "random" {
 }
 
 module cf_distro {
-  source = "../../"
+  source = "../../../"
 
   aliases = [local.domain]
 
@@ -79,9 +79,10 @@ module cf_distro {
 
   }
 
-  lambda_dist_dir = "../../lambda/dist"
-  lambda_code_dir = "../../lambda/"
+  lambda_dist_dir = "../../../lambda/feature-flag-origin-router/dist"
+  lambda_code_dir = "../../../lambda/feature-flag-origin-router/"
   lambda_name     = "cloud-front-router-${random_string.random.result}"
+  lambda_cf_event_type = "origin-request"
 }
 
 resource "aws_route53_record" "www" {
@@ -134,6 +135,7 @@ data "aws_iam_policy_document" "lambda_exec_role_policy_document" {
       "ssm:*",
     ]
 
-    resources = ["arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/sr/*"]
+    resources = ["arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/sr/*"
+    ,"arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/launch-darkly/*"]
   }
 }

@@ -65,3 +65,9 @@ variable "lambda_code_dir" {
 variable "lambda_name" {
   type = string
 }
+
+variable "lambda_cf_event_type" {
+  type = string
+}
+
+

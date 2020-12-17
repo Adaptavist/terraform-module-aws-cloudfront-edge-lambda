@@ -48,7 +48,7 @@ resource "aws_cloudfront_distribution" "this" {
     }
 
     lambda_function_association {
-      event_type = "origin-request"
+      event_type = var.lambda_cf_event_type
       // The lambda version number has to be supplied and LATEST cannot be used
       lambda_arn = "${module.aws-lambda.lambda_arn}:${module.aws-lambda.lambda_version}"
     }
@@ -113,30 +113,4 @@ module "aws-lambda" {
   tags      = module.labels.tags
 
   depends_on = [null_resource.lambda_build]
-}
-
-resource "aws_iam_role_policy" "lambda_exec_role_policy" {
-  name = "edge_lambda_role_policy"
-  role = module.aws-lambda.lambda_role_name
-
-  policy = <<-EOF
-  {
-    "Version": "2012-10-17",
-    "Statement": [
-      {
-        "Action": [     
-          "logs:*",
-          "ssm:*",
-          "lambda:GetFunction",
-          "lambda:EnableReplication*",
-          "iam:CreateServiceLinkedRole",
-          "cloudfront:UpdateDistribution",
-          "cloudfront:CreateDistribution"
-        ],
-        "Effect": "Allow",
-        "Resource": "*"
-      }
-    ]
-  }
-  EOF
 }
