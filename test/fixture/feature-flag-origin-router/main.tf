@@ -45,7 +45,7 @@ resource "random_string" "random" {
   upper   = false
 }
 
-module cf_distro {
+module "cf_distro" {
   source = "../../../"
 
   aliases = [local.domain]

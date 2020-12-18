@@ -146,7 +146,7 @@ variable "lambda_name" {
 
 variable "lambda_build_command" {
   type        = string
-  default = "npm install && npm run-script build"
+  default     = "npm install && npm run-script build"
   description = "Command used to build Lambda"
 }
 
@@ -172,6 +172,6 @@ variable "name" {
 }
 
 variable "tags" {
-  type        = map
+  type        = map(any)
   description = "Tags applied to the distribution, these should follow what is defined [here](https://github.com/Adaptavist/terraform-compliance/blob/master/features/tags.feature)."
 }

@@ -27,7 +27,7 @@ resource "aws_route53_record" "this" {
 
 resource "aws_cloudfront_distribution" "this" {
 
-  dynamic origin {
+  dynamic "origin" {
     for_each = var.custom_origin_mappings
     content {
       domain_name = origin.value.domain_name
@@ -42,7 +42,7 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
 
-  dynamic logging_config {
+  dynamic "logging_config" {
     for_each = var.enable_access_logs ? [1] : []
     content {
       include_cookies = var.log_cookies
@@ -51,7 +51,7 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
 
-  dynamic origin {
+  dynamic "origin" {
     for_each = var.s3_origin_mappings
     content {
       domain_name = origin.value.domain_name
@@ -77,7 +77,7 @@ resource "aws_cloudfront_distribution" "this" {
 
     viewer_protocol_policy = var.viewer_protocol_policy
 
-    dynamic forwarded_values {
+    dynamic "forwarded_values" {
       for_each = var.default_cache_behavior.static_backend ? [1] : []
       content {
         query_string = false
@@ -87,7 +87,7 @@ resource "aws_cloudfront_distribution" "this" {
       }
     }
 
-    dynamic forwarded_values {
+    dynamic "forwarded_values" {
       for_each = var.default_cache_behavior.static_backend ? [] : [1]
       content {
         query_string = true
