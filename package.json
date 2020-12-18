@@ -34,7 +34,7 @@
       [
         "@semantic-release/exec",
         {
-          "successCmd": "git push --mirror git@github.com:Adaptavist/terraform-module-aws-cloudfront-router-edge-lambda.git"
+          "successCmd": "git push --mirror git@github.com:Adaptavist/terraform-module-aws-cloudfront-edge-lambda.git"
         }
       ]
     ]
