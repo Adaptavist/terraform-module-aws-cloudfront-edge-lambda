@@ -141,7 +141,7 @@ resource "aws_lambda_permission" "allow_cloudfront" {
 
 resource "null_resource" "lambda_build" {
   provisioner "local-exec" {
-    command = "cd ${var.lambda_code_dir} && npm install && npm run-script build"
+    command = "cd ${var.lambda_code_dir} && ${var.lambda_build_command}"
   }
 }
 
@@ -150,7 +150,7 @@ module "aws-lambda" {
   version = "1.7.0"
 
   function_name   = "${var.lambda_name}-${var.stage}"
-  description     = "An edge lambda which is attached to the CF distribution ${aws_cloudfront_distribution.this.id}"
+  description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
   lambda_code_dir = var.lambda_dist_dir
   handler         = "app.handler"
   runtime         = "nodejs12.x"

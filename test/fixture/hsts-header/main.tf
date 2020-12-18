@@ -91,18 +91,6 @@ module cf_distro {
   r53_zone_name = local.tld
 }
 
-resource "aws_route53_record" "www" {
-  zone_id = data.aws_route53_zone.zone.zone_id
-  name    = local.domain
-  type    = "A"
-
-  alias {
-    name                   = module.cf_distro.cf_domain_name
-    zone_id                = module.cf_distro.cf_hosted_zone_id
-    evaluate_target_health = false
-  }
-}
-
 
 resource "aws_iam_role_policy" "lambda_exec_role_policy" {
   policy = data.aws_iam_policy_document.lambda_exec_role_policy_document.json

@@ -144,6 +144,12 @@ variable "lambda_name" {
   description = "Name to be given to the Lambda, the stage name will be appended to the end."
 }
 
+variable "lambda_build_command" {
+  type        = string
+  default = "npm install && npm run-script build"
+  description = "Command used to build Lambda"
+}
+
 variable "lambda_cf_event_type" {
   type        = string
   description = "When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'."
