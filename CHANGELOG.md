@@ -1,3 +1,10 @@
+# [1.2.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.1.0...v1.2.0) (2021-01-01)
+
+
+### Features
+
+* running integration tests in branches ([2e95b37](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/2e95b37b444dc28b536d2179cd83d64eefe94533))
+
 # [1.1.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.0.1...v1.1.0) (2021-01-01)
 
 
