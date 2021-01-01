@@ -2,7 +2,7 @@ package test
 
 import (
 	"io/ioutil"
-	
+	"os"
 	"net/http"
 	"net/url"
 	"strings"
@@ -11,6 +11,8 @@ import (
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
+
+var assumeRoleArn = os.Getenv("SANDBOX_ORG_ROLE_ARN")
 
 // TestHeaderModule - Our test entry point
 func TestHeaderModule(t *testing.T) {
