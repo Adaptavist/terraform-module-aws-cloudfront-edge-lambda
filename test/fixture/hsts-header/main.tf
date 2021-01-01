@@ -51,7 +51,7 @@ resource "random_string" "random" {
 }
 
 module "cf_distro" {
-  source = "../../"
+  source = "../../../"
 
   aliases = [local.domain]
 
@@ -63,38 +63,34 @@ module "cf_distro" {
   acm_cert_arn = data.aws_acm_certificate.cert.arn
 
   default_cache_behavior = {
-    origin_id       = "google"
-    domain_name     = "www.google.co.uk"
+    origin_id       = "scriptrunner"
+    domain_name     = "sr-cloud-test.connect.adaptavist.com"
     allowed_methods = local.default_allowed_methods
+    static_backend  = false
   }
 
-  origin_mappings = {
-
-    google = {
-      origin_id       = "google"
-      domain_name     = "www.google.co.uk"
-      path_pattern    = "/*"
+  custom_origin_mappings = {
+    scriptrunner = {
+      origin_id       = "scriptrunner"
+      domain_name     = "sr-cloud-test.connect.adaptavist.com"
+      path_pattern    = "/latest/*"
       allowed_methods = local.default_allowed_methods
     }
-
   }
 
-  lambda_dist_dir = "../../lambda/dist"
-  lambda_code_dir = "../../lambda/"
-  lambda_name     = "cloud-front-router-${random_string.random.result}"
+  lambda_dist_dir      = "../../../lambda/hsts-header/"
+  lambda_code_dir      = "../../../lambda/hsts-header/"
+  lambda_name          = "cloud-front-hsts-header-${random_string.random.result}"
+  lambda_cf_event_type = "origin-response"
+
+  min_ttl     = 0
+  default_ttl = 0
+  max_ttl     = 0
+
+  domain        = "*.${local.tld}"
+  r53_zone_name = local.tld
 }
 
-resource "aws_route53_record" "www" {
-  zone_id = data.aws_route53_zone.zone.zone_id
-  name    = local.domain
-  type    = "A"
-
-  alias {
-    name                   = module.cf_distro.cf_domain_name
-    zone_id                = module.cf_distro.cf_hosted_zone_id
-    evaluate_target_health = false
-  }
-}
 
 resource "aws_iam_role_policy" "lambda_exec_role_policy" {
   policy = data.aws_iam_policy_document.lambda_exec_role_policy_document.json
@@ -117,26 +113,4 @@ data "aws_iam_policy_document" "lambda_exec_role_policy_document" {
     resources = ["*"]
   }
 
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "logs:*",
-    ]
-
-    resources = ["arn:aws:logs:*:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/*.${module.cf_distro.lambda_role_name}"]
-  }
-
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "ssm:*",
-    ]
-
-    resources = [
-      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/routing/*",
-      "arn:aws:ssm:*:${data.aws_caller_identity.current.account_id}:parameter/launch-darkly/*"
-    ]
-  }
 }

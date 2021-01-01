@@ -8,10 +8,27 @@ module "labels" {
   tags      = var.tags
 }
 
+data "aws_route53_zone" "public_zone" {
+  name         = var.r53_zone_name
+  private_zone = false
+}
+
+resource "aws_route53_record" "this" {
+  zone_id = data.aws_route53_zone.public_zone.zone_id
+  name    = var.domain
+  type    = "A"
+
+  alias {
+    name                   = aws_cloudfront_distribution.this.domain_name
+    zone_id                = aws_cloudfront_distribution.this.hosted_zone_id
+    evaluate_target_health = false
+  }
+}
+
 resource "aws_cloudfront_distribution" "this" {
 
-  dynamic origin {
-    for_each = var.origin_mappings
+  dynamic "origin" {
+    for_each = var.custom_origin_mappings
     content {
       domain_name = origin.value.domain_name
       origin_id   = origin.value.origin_id
@@ -25,10 +42,32 @@ resource "aws_cloudfront_distribution" "this" {
     }
   }
 
+  dynamic "logging_config" {
+    for_each = var.enable_access_logs ? [1] : []
+    content {
+      include_cookies = var.log_cookies
+      bucket          = var.access_logs_bucket
+      prefix          = var.domain
+    }
+  }
+
+  dynamic "origin" {
+    for_each = var.s3_origin_mappings
+    content {
+      domain_name = origin.value.domain_name
+      origin_id   = origin.value.origin_id
+
+      s3_origin_config {
+        origin_access_identity = origin.value.origin_access_identity
+      }
+    }
+  }
+
   enabled             = true
   is_ipv6_enabled     = true
   comment             = "Cloudfront distribution for ${module.labels.id}"
   default_root_object = var.default_root_object
+  wait_for_deployment = var.wait_for_deployment
 
   aliases = var.aliases
 
@@ -38,28 +77,38 @@ resource "aws_cloudfront_distribution" "this" {
 
     viewer_protocol_policy = var.viewer_protocol_policy
 
-    forwarded_values {
-      query_string = true
-      headers      = ["*"]
+    dynamic "forwarded_values" {
+      for_each = var.default_cache_behavior.static_backend ? [1] : []
+      content {
+        query_string = false
+        cookies {
+          forward = "none"
+        }
+      }
+    }
 
-      cookies {
-        forward = "all"
+    dynamic "forwarded_values" {
+      for_each = var.default_cache_behavior.static_backend ? [] : [1]
+      content {
+        query_string = true
+        headers      = ["*"]
+        cookies {
+          forward = "all"
+        }
       }
     }
 
     lambda_function_association {
-      event_type = "origin-request"
+      event_type = var.lambda_cf_event_type
       // The lambda version number has to be supplied and LATEST cannot be used
       lambda_arn = "${module.aws-lambda.lambda_arn}:${module.aws-lambda.lambda_version}"
     }
 
-    // We are using cloudfront for routing only, we dont want to cache anything. 
-    min_ttl     = 0
-    default_ttl = 0
-    max_ttl     = 0
-    // we have to specifiy some methods even tho cache is disabled
-    cached_methods = ["HEAD", "GET"]
+    min_ttl     = var.min_ttl
+    default_ttl = var.default_ttl
+    max_ttl     = var.max_ttl
 
+    cached_methods = var.cached_methods
   }
 
   restrictions {
@@ -92,7 +141,7 @@ resource "aws_lambda_permission" "allow_cloudfront" {
 
 resource "null_resource" "lambda_build" {
   provisioner "local-exec" {
-    command = "cd ${var.lambda_code_dir} && npm install && npm run-script build"
+    command = "cd ${var.lambda_code_dir} && ${var.lambda_build_command}"
   }
 }
 
@@ -101,7 +150,7 @@ module "aws-lambda" {
   version = "1.7.0"
 
   function_name   = "${var.lambda_name}-${var.stage}"
-  description     = "A lambda which routes requests based on custom logic"
+  description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
   lambda_code_dir = var.lambda_dist_dir
   handler         = "app.handler"
   runtime         = "nodejs12.x"

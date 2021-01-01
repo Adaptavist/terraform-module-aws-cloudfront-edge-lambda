@@ -39,11 +39,6 @@ data "aws_acm_certificate" "cert" {
   statuses = ["ISSUED"]
 }
 
-data "aws_route53_zone" "zone" {
-  name         = local.tld
-  private_zone = false
-}
-
 resource "random_string" "random" {
   length  = 8
   special = false
@@ -51,7 +46,7 @@ resource "random_string" "random" {
 }
 
 module "cf_distro" {
-  source = "../../"
+  source = "../../../"
 
   aliases = [local.domain]
 
@@ -66,34 +61,29 @@ module "cf_distro" {
     origin_id       = "google"
     domain_name     = "www.google.co.uk"
     allowed_methods = local.default_allowed_methods
+    static_backend  = false
   }
 
-  origin_mappings = {
-
+  custom_origin_mappings = {
     google = {
       origin_id       = "google"
       domain_name     = "www.google.co.uk"
       path_pattern    = "/*"
       allowed_methods = local.default_allowed_methods
     }
-
   }
 
-  lambda_dist_dir = "../../lambda/dist"
-  lambda_code_dir = "../../lambda/"
-  lambda_name     = "cloud-front-router-${random_string.random.result}"
-}
+  lambda_dist_dir      = "../../../lambda/feature-flag-origin-router/dist"
+  lambda_code_dir      = "../../../lambda/feature-flag-origin-router/"
+  lambda_name          = "cloud-front-router-${random_string.random.result}"
+  lambda_cf_event_type = "origin-request"
 
-resource "aws_route53_record" "www" {
-  zone_id = data.aws_route53_zone.zone.zone_id
-  name    = local.domain
-  type    = "A"
+  min_ttl     = 0
+  default_ttl = 0
+  max_ttl     = 0
 
-  alias {
-    name                   = module.cf_distro.cf_domain_name
-    zone_id                = module.cf_distro.cf_hosted_zone_id
-    evaluate_target_health = false
-  }
+  domain        = "*.${local.tld}"
+  r53_zone_name = local.tld
 }
 
 resource "aws_iam_role_policy" "lambda_exec_role_policy" {
