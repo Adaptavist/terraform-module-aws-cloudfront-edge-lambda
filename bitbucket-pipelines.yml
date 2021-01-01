@@ -37,4 +37,5 @@ pipelines:
     master:
       - step: *check
       - step: *compliance
+      - step: *integration-tests
       - step: *release
