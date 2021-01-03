@@ -1,3 +1,10 @@
+## [1.2.1](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.0...v1.2.1) (2021-01-03)
+
+
+### Bug Fixes
+
+* **main.tf:** always running lambda build - not ideal ([0a45655](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/0a45655d1af76a4ddfccf861353c6316de20e68f))
+
 # [1.2.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.1.0...v1.2.0) (2021-01-01)
 
 
