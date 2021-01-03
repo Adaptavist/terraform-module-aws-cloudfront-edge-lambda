@@ -143,6 +143,10 @@ resource "null_resource" "lambda_build" {
   provisioner "local-exec" {
     command = "cd ${var.lambda_code_dir} && ${var.lambda_build_command}"
   }
+
+  triggers = {
+    always_run = timestamp()
+  }
 }
 
 module "aws-lambda" {
