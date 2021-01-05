@@ -1,6 +1,6 @@
 # module-aws-cloudfront-router
 
-A module which creates a CloudFront distribution which is used for setting up a CloudFront distribution which has an Edge Lambda attached. The module assumes that the edge Lambda is
+A module which creates a CloudFront distribution which has an Edge Lambda attached.
 
 ## Variables
 
@@ -55,13 +55,9 @@ A module which creates a CloudFront distribution which is used for setting up a 
 # default_cache_behavior
 | Name                        | Description                                                                                     |
 | --------------------------- | ----------------------------------------------------------------------------------------------- |
-<<<<<<< HEAD
-| origin_id                 | The user defined unique id of the origin                                      |
-| domain_name | The domain name of the origin |
-| allowed_methods | A list containing which HTTP methods CloudFront processes and forwards to the backend origin |
-=======
 | origin_id                 | The user defined unique id of the origin.                                      |
 | domain_name | The domain name of the origin. |
+| static_backend | If true, cookies, HTTP headers and query strings will be forwarded to the origin. |
 | allowed_methods | A list containing which HTTP methods CloudFront processes and forwards to the backend origin. |
 
 
@@ -76,4 +72,3 @@ A module which creates a CloudFront distribution which is used for setting up a 
 | cf\_status | Current status of the distribution. |
 | lambda\_role\_name | IAM role name given to Edge Lambda. |
 
->>>>>>> task/SRCLOUD-4267-assets-edge-lambda
