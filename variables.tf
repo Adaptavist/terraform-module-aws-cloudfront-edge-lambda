@@ -44,7 +44,7 @@ variable "default_cache_behavior" {
 variable "aliases" {
   type        = list(string)
   description = "Aliases used by the CloudFront distribution."
-  default =[]
+  default     = []
 }
 
 variable "default_root_object" {
