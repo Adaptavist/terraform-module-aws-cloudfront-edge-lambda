@@ -153,7 +153,7 @@ module "aws-lambda" {
   source  = "Adaptavist/aws-lambda/module"
   version = "1.7.0"
 
-  function_name   = "${var.lambda_name}-${var.stage}"
+  function_name   = var.lambda_name
   description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
   lambda_code_dir = var.lambda_dist_dir
   handler         = "app.handler"
