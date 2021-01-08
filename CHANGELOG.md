@@ -1,3 +1,10 @@
+## [1.2.3](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.2...v1.2.3) (2021-01-08)
+
+
+### Bug Fixes
+
+* making aliases optional ([816926e](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/816926e2978726693d38390809918561a4fff9f0))
+
 ## [1.2.2](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.1...v1.2.2) (2021-01-05)
 
 
