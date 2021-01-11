@@ -25,3 +25,8 @@ output "cf_hosted_zone_id" {
 output "public_domain_name" {
   value = local.domain
 }
+
+output "random_id" {
+  value       = random_string.random
+  description = "random id which has been used for internal resource generation, this is exposed for use in any other related resources."
+}

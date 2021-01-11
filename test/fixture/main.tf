@@ -18,10 +18,10 @@ provider "aws" {
 locals {
   default_allowed_methods = ["HEAD", "GET", "OPTIONS"]
   tld                     = "avst-sbx.adaptavist.com"
-  domain                  = "${random_string.random.result}-cf-router-test.${local.tld}"
+  domain                  = "${random_string.random.result}-cf-edge-lambda-test.${local.tld}"
   namespace               = "tf-tests"
   stage                   = "test"
-  name                    = "cf-router"
+  name                    = "cf-edge-lambda-test"
   tags = {
     "Avst:BusinessUnit" : "platform"
     "Avst:Team" : "cloud-infra"
@@ -51,7 +51,7 @@ resource "random_string" "random" {
 }
 
 module "cf_distro" {
-  source = "../../../"
+  source = "../.."
 
   aliases = [local.domain]
 
@@ -78,38 +78,15 @@ module "cf_distro" {
     }
   }
 
-  lambda_dist_dir      = "../../../lambda/hsts-header/"
-  lambda_code_dir      = "../../../lambda/hsts-header/"
-  lambda_name          = "cloud-front-hsts-header-${random_string.random.result}"
-  lambda_cf_event_type = "origin-response"
+  lambda_dist_dir      = "${path.module}/hello-world-lambda/"
+  lambda_code_dir      = "${path.module}/hello-world-lambda/"
+  lambda_name_prefix   = "cloud-front-hello-world"
+  lambda_cf_event_type = "viewer-response"
 
   min_ttl     = 0
   default_ttl = 0
   max_ttl     = 0
 
-  domain        = "*.${local.tld}"
+  domain        = local.domain
   r53_zone_name = local.tld
-}
-
-
-resource "aws_iam_role_policy" "lambda_exec_role_policy" {
-  policy = data.aws_iam_policy_document.lambda_exec_role_policy_document.json
-  role   = module.cf_distro.lambda_role_name
-}
-
-data "aws_iam_policy_document" "lambda_exec_role_policy_document" {
-
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "lambda:GetFunction",
-      "lambda:EnableReplication*",
-      "iam:CreateServiceLinkedRole",
-      "cloudfront:UpdateDistribution",
-      "cloudfront:CreateDistribution"
-    ]
-
-    resources = ["*"]
-  }
 }

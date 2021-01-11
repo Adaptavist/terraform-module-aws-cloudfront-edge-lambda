@@ -1,0 +1,11 @@
+{
+  "name": "hello-world-lambda",
+  "version": "1.0.0",
+  "description": "A CloudFront Edge Lambda which rewrites the origin response",
+  "main": "app.js",
+  "author": "",
+  "scripts": {
+    "build": ""
+  },
+  "license": "ISC"
+}

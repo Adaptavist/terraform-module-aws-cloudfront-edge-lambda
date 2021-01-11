@@ -18,7 +18,8 @@ func destroyInfra(terraformOptions *terraform.Options, t *testing.T) {
 		We do not need to delete the lambdas, as they are associated with a CloudFront distribution, we can remove the state from Terraforms remote state.
 		Then when Terraform destroys the CloudFront distro the Lambdas will get cleaned up as part of that.
 	*/
-	terraform.RunTerraformCommand(t, terraformOptions, "state", "rm", "module.cf_distro.module.aws-lambda.aws_lambda_function.this")
+	terraform.RunTerraformCommand(t, terraformOptions, "state", "rm", "module.cf_distro.module.edge_lambda.aws_lambda_function.this")
+	terraform.RunTerraformCommand(t, terraformOptions, "state", "rm", "module.cf_distro.module.hsts_header_edge_lambda.aws_lambda_function.this")
 
 	terraform.Destroy(t, terraformOptions)
 }
@@ -33,7 +34,7 @@ func RandomString(length int) string {
 	return string(b)
 }
 
-func assertModuleOutputs(t *testing.T, outputs map[string]interface{} ) {		
+func assertModuleOutputs(t *testing.T, outputs map[string]interface{} ) {
 		assert.NotNil(t, outputs["cf_id"])
 		assert.NotNil(t, outputs["cf_arn"])
 		assert.NotNil(t, outputs["cf_status"])
@@ -51,7 +52,7 @@ func generateTerraformOptions(assumeRoleArn string, postfix string, fixtureName 
 			"key":      "modules/module-aws-cloudfront-edge-lambda/tests/fixures/" + fixtureName + "/" + postfix,
 			"role_arn": assumeRoleArn,
 		},
-		TerraformDir: "fixture/" + fixtureName,
+		TerraformDir: "fixture/",
 	}
 
 	return *terraformOptions
