@@ -81,7 +81,7 @@ module "cf_distro" {
   lambda_dist_dir      = "${path.module}/hello-world-lambda/"
   lambda_code_dir      = "${path.module}/hello-world-lambda/"
   lambda_name_prefix   = "cloud-front-hello-world"
-  lambda_cf_event_type = "viewer-response"
+  lambda_cf_event_type = "origin-response"
 
   min_ttl     = 0
   default_ttl = 0

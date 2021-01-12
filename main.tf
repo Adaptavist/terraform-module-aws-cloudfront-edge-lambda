@@ -111,7 +111,7 @@ resource "aws_cloudfront_distribution" "this" {
     }
 
     lambda_function_association {
-      event_type = "origin-response"
+      event_type = "viewer-response"
       // The lambda version number has to be supplied and LATEST cannot be used
       lambda_arn = "${module.hsts_header_edge_lambda.lambda_arn}:${module.hsts_header_edge_lambda.lambda_version}"
     }
