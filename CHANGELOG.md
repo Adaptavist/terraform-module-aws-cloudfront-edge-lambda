@@ -1,3 +1,17 @@
+# [1.3.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.4...v1.3.0) (2021-01-12)
+
+
+### Bug Fixes
+
+* correcting event types ([44ab41b](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/44ab41bd451a8d4ade8e482921dc673cb442d0a8))
+* increasinng lambda timeouts ([f461efc](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/f461efc0a4e4b3ddfa78dec9e1235953abeea2f1))
+
+
+### Features
+
+* locking region ([203f65d](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/203f65d40abbaf8d57f3bfaff8b19265e0592fbb))
+* **cf:** baking in the hsts header for the origin-response event ([8d58b2a](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/8d58b2ade30ce38106edf4231295e511e0f5b038))
+
 ## [1.2.4](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.3...v1.2.4) (2021-01-08)
 
 
