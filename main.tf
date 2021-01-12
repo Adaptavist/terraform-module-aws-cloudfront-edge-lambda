@@ -1,3 +1,7 @@
+provider "aws" {
+  region = "us-east-1"
+}
+
 data "aws_route53_zone" "public_zone" {
   name         = var.r53_zone_name
   private_zone = false

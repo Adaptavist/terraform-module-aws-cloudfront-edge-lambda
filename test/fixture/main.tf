@@ -2,6 +2,10 @@
   Test Fixture
 */
 
+provider "aws" {
+  region = "us-east-1"
+}
+
 terraform {
   backend "s3" {
     bucket         = "product-sandbox-terraform-state-management"
@@ -9,10 +13,6 @@ terraform {
     region         = "us-east-1"
     encrypt        = "true"
   }
-}
-
-provider "aws" {
-  region = var.aws_region
 }
 
 locals {
