@@ -1,3 +1,10 @@
+## [1.2.4](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.3...v1.2.4) (2021-01-08)
+
+
+### Bug Fixes
+
+* **lambda:** removing stage from lambda name ([a3404d3](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/a3404d3509db3c4b1fe338973ddfa27dbcd4f6ad))
+
 ## [1.2.3](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.2...v1.2.3) (2021-01-08)
 
 
