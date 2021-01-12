@@ -170,7 +170,7 @@ module "edge_lambda" {
   lambda_code_dir = var.lambda_dist_dir
   handler         = "app.handler"
   runtime         = "nodejs12.x"
-  timeout         = "1"
+  timeout         = "3"
   publish_lambda  = true
 
   namespace = var.namespace
@@ -198,7 +198,7 @@ module "hsts_header_edge_lambda" {
   lambda_code_dir = "${path.module}/lambda/hsts-header/"
   handler         = "app.handler"
   runtime         = "nodejs12.x"
-  timeout         = "1"
+  timeout         = "3"
   publish_lambda  = true
 
   namespace = var.namespace
