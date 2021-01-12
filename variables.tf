@@ -140,9 +140,9 @@ variable "lambda_code_dir" {
   description = "Directory of the source code for the Edge lambda."
 }
 
-variable "lambda_name" {
+variable "lambda_name_prefix" {
   type        = string
-  description = "Name to be given to the Lambda, the stage name will be appended to the end."
+  description = "Name prefix to be given to the Lambda."
 }
 
 variable "lambda_build_command" {

@@ -15,9 +15,9 @@ definitions:
   compliance: &compliance
     name: Compliance
     script:
-      - (cd test/fixture/hsts-header && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform init -backend-config="key=modules/module-aws-cloudfront-router/tests/fixures/default/compliance-test.tfstate")
-      - (cd test/fixture/hsts-header && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform plan -out=plan.out)
-      - (cd test/fixture/hsts-header && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform-compliance -f git:https://github.com/Adaptavist/terraform-compliance.git -p plan.out)
+      - (cd test/fixture && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform init -backend-config="key=modules/module-aws-cloudfront-router/tests/fixures/default/compliance-test.tfstate")
+      - (cd test/fixture && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform plan -out=plan.out)
+      - (cd test/fixture && AWS_ACCESS_KEY_ID="${TF_TEST_AWS_ACCESS_KEY_ID}" AWS_SECRET_ACCESS_KEY="${TF_TEST_AWS_SECRET_ACCESS_KEY}" terraform-compliance -f git:https://github.com/Adaptavist/terraform-compliance.git -p plan.out)
 
   release: &release
     name: Release

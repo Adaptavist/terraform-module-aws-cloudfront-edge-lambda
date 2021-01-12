@@ -19,8 +19,8 @@ func TestHeaderModule(t *testing.T) {
 
 	postfix := RandomString(8)
 
-	// Terraforming	
-	terraformOptions := generateTerraformOptions(assumeRoleArn, postfix, "hsts-header")	
+	// Terraforming
+	terraformOptions := generateTerraformOptions(assumeRoleArn, postfix, "edge-lambda")
 	defer destroyInfra(&terraformOptions, t)
 	terraform.InitAndApply(t, &terraformOptions)
 	outputs := terraform.OutputAll(t, &terraformOptions)
@@ -34,10 +34,11 @@ func TestHeaderModule(t *testing.T) {
 
 	desiredResponseHeaders := map[string][]string{
 		"Strict-Transport-Security": {"max-age=31536000"},
+		"Message": {"hello-world"},
 	}
 
 	// Hit CF distro and make sure we get correct response
-	testBodyAndHeader("\"baseUrl\":\"https://sr-cloud-test.connect.adaptavist.com\"", "https://"+publicDomainName+"/sr-dispatcher/jira/atlassian-connect.json", defaultHeaders, desiredResponseHeaders, t)	
+	testBodyAndHeader("\"baseUrl\":\"https://sr-cloud-test.connect.adaptavist.com\"", "https://"+publicDomainName+"/sr-dispatcher/jira/atlassian-connect.json", defaultHeaders, desiredResponseHeaders, t)
 }
 
 func testBodyAndHeader(testValue string, testURL string, requestHeaders map[string][]string, desiredResponseHeaders map[string][]string, t *testing.T) {
@@ -63,9 +64,9 @@ func testBodyAndHeader(testValue string, testURL string, requestHeaders map[stri
 	assert.True(t, strings.Contains(bodyString, testValue), testURL+" should contain the value "+testValue)
 
 	for key, element := range desiredResponseHeaders {
-		responseHeaders :=  resp.Header		
+		responseHeaders :=  resp.Header
 		assert.NotNil(t, responseHeaders[key], "Response should include the header")
-		assert.Equal(t, responseHeaders[key], element, "Response header value not correct")
+		assert.Equal(t, responseHeaders[key], element, "Response header value not correct, was expecting ")
     }
 }
 
