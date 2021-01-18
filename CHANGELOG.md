@@ -1,3 +1,10 @@
+# [1.4.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.3.0...v1.4.0) (2021-01-18)
+
+
+### Features
+
+* **lambda:** stopped building lambda as part of module ([161580e](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/161580e0423cd7e7a38c76be20579b1754b8bd26))
+
 # [1.3.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.2.4...v1.3.0) (2021-01-12)
 
 
