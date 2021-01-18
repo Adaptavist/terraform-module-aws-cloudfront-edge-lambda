@@ -79,7 +79,6 @@ module "cf_distro" {
   }
 
   lambda_dist_dir      = "${path.module}/hello-world-lambda/"
-  lambda_code_dir      = "${path.module}/hello-world-lambda/"
   lambda_name_prefix   = "cloud-front-hello-world"
   lambda_cf_event_type = "origin-response"
 
@@ -87,6 +86,8 @@ module "cf_distro" {
   default_ttl = 0
   max_ttl     = 0
 
-  domain        = local.domain
-  r53_zone_name = local.tld
+  domain          = local.domain
+  r53_zone_name   = local.tld
+  lambda_handler  = "app.handler"
+  lambda_runtimme = "nodejs12.x"
 }

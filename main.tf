@@ -155,16 +155,6 @@ resource "aws_lambda_permission" "allow_cloudfront" {
   depends_on = [module.edge_lambda]
 }
 
-resource "null_resource" "lambda_build" {
-  provisioner "local-exec" {
-    command = "cd ${var.lambda_code_dir} && ${var.lambda_build_command}"
-  }
-
-  triggers = {
-    always_run = timestamp()
-  }
-}
-
 module "edge_lambda" {
   source  = "Adaptavist/aws-lambda/module"
   version = "1.7.0"
@@ -172,16 +162,14 @@ module "edge_lambda" {
   function_name   = "${var.lambda_name_prefix}-${random_string.random.result}"
   description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
   lambda_code_dir = var.lambda_dist_dir
-  handler         = "app.handler"
-  runtime         = "nodejs12.x"
+  handler         = var.lambda_handler
+  runtime         = var.lambda_runtimme
   timeout         = "3"
   publish_lambda  = true
 
   namespace = var.namespace
   stage     = var.stage
   tags      = module.labels.tags
-
-  depends_on = [null_resource.lambda_build]
 }
 
 resource "aws_lambda_permission" "hsts_header_lambda_permission" {
