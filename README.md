@@ -3,12 +3,11 @@
 A module which creates a CloudFront distribution which has an Edge Lambda attached.
 
 ## Variables
-
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | access\_logs\_bucket | If access logs are enabled the bucket the logs should go into, defaults to false. | `string` | `""` | no |
 | acm\_cert\_arn | AWS ACM certificate ARN to use for the CloudFront distribution. | `string` | n/a | yes |
-| aliases | Aliases used by the CloudFront distribution. | `list(string)` | n/a | yes |
+| aliases | Aliases used by the CloudFront distribution. | `list(string)` | `[]` | no |
 | cached\_methods | HTTP methods the CloudFront distribution will cache, defaults to GET and HEAD. | `list(string)` | <pre>[<br>  "GET",<br>  "HEAD"<br>]</pre> | no |
 | custom\_origin\_mappings | Custom origin mappings. Can be used in conjunction with S3 origin mappings Defaults to an empty map. | <pre>map(object({<br>    origin_id       = string<br>    domain_name     = string<br>    path_pattern    = string<br>    allowed_methods = list(string)<br>  }))</pre> | `{}` | no |
 | default\_cache\_behavior | Default cache behaviour used by the distro, if a backend is static no query strings or cookies are forwarded. | <pre>object({<br>    origin_id       = string<br>    domain_name     = string<br>    static_backend  = bool<br>    allowed_methods = list(string)<br>  })</pre> | n/a | yes |
@@ -18,11 +17,11 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | enable\_access\_logs | Should accesses to the CloudFront distribution be logged, defaults to false. | `bool` | `false` | no |
 | geo\_restriction\_locations | The ISO 3166-1-alpha-2 codes for which you want CloudFront either to allow or disallow content delivery. | `list(string)` | `[]` | no |
 | geo\_restriction\_type | The method that you want to use to restrict distribution of your content by country: 'none', 'whitelist', or 'blacklist'. Defaults to none. | `string` | `"none"` | no |
-| lambda\_build\_command | Command used to build Lambda | `string` | `"npm install \u0026\u0026 npm run-script build"` | no |
 | lambda\_cf\_event\_type | When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'. | `string` | n/a | yes |
-| lambda\_code\_dir | Directory of the source code for the Edge lambda. | `string` | n/a | yes |
-| lambda\_dist\_dir | Directory of compiled JS files including any dependencies. | `string` | n/a | yes |
-| lambda\_name | Name to be given to the Lambda, the stage name will be appended to the end. | `string` | n/a | yes |
+| lambda\_dist\_dir | Directory of the lambda distribution which is to be published | `string` | n/a | yes |
+| lambda\_handler | The lambda entry point | `string` | n/a | yes |
+| lambda\_name\_prefix | Name prefix to be given to the Lambda. | `string` | n/a | yes |
+| lambda\_runtimme | The runtime of the lambda | `string` | n/a | yes |
 | log\_cookies | If access logs are enabled, are cookies logged. | `bool` | `false` | no |
 | max\_ttl | Maximum TTL of objects in the cache. Set to 0 if you wish to disable caching. Defaults to 3600. | `number` | `86400` | no |
 | min\_ttl | Minimum TTL of objects in the cache. Defaults to 0. | `number` | `0` | no |
@@ -32,7 +31,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | r53\_zone\_name | Name of the public hosted zone, this is used for creating the A record for the CloudFront distro. | `string` | n/a | yes |
 | s3\_origin\_mappings | S3 origin mappings. Can be used in conjunction with custom origin mappings Defaults to an empty map. | <pre>map(object({<br>    origin_id              = string<br>    domain_name            = string<br>    origin_access_identity = string<br>  }))</pre> | `{}` | no |
 | stage | The stage of the distribution - (dev, staging etc). | `string` | n/a | yes |
-| tags | Tags applied to the distribution, these should follow what is defined [here](https://github.com/Adaptavist/terraform-compliance/blob/master/features/tags.feature). | `map` | n/a | yes |
+| tags | Tags applied to the distribution, these should follow what is defined [here](https://github.com/Adaptavist/terraform-compliance/blob/master/features/tags.feature). | `map(any)` | n/a | yes |
 | viewer\_protocol\_policy | Default viewer\_protocol\_policy for the CloudFront distribution, this defaults to 'redirect-to-https'. | `string` | `"redirect-to-https"` | no |
 | wait\_for\_deployment | Specifies if Terrafrom should wait for deployments to complete before returning. Defaults to true. | `bool` | `true` | no |
 

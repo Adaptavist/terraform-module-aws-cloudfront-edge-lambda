@@ -132,12 +132,12 @@ variable "geo_restriction_locations" {
 //EDGE LAMBDA
 variable "lambda_dist_dir" {
   type        = string
-  description = "Directory of compiled JS files including any dependencies."
+  description = "Directory of the lambda distribution which is to be published"
 }
 
-variable "lambda_code_dir" {
+variable "lambda_runtimme" {
   type        = string
-  description = "Directory of the source code for the Edge lambda."
+  description = "The runtime of the lambda"
 }
 
 variable "lambda_name_prefix" {
@@ -145,10 +145,9 @@ variable "lambda_name_prefix" {
   description = "Name prefix to be given to the Lambda."
 }
 
-variable "lambda_build_command" {
+variable "lambda_handler" {
   type        = string
-  default     = "npm install && npm run-script build"
-  description = "Command used to build Lambda"
+  description = "The lambda entry point"
 }
 
 variable "lambda_cf_event_type" {
