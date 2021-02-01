@@ -153,7 +153,7 @@ resource "aws_lambda_permission" "allow_cloudfront" {
   count         = var.enable_custom_lambda ? 1 : 0
   statement_id  = "AllowExecutionFromCloudFront"
   action        = "lambda:GetFunction"
-  function_name = module.edge_lambda.lambda_name
+  function_name = var.enable_custom_lambda ? module.edge_lambda.lambda_name : ""
   principal     = "edgelambda.amazonaws.com"
 
   depends_on = [module.edge_lambda]
