@@ -29,6 +29,6 @@ output "cf_hosted_zone_id" {
 }
 
 output "lambda_role_name" {
-  value       = var.enable_custom_lambda ? module.edge_lambda.lambda_role_name) : ""
+  value       = var.enable_custom_lambda ? module.edge_lambda.lambda_role_name : ""
   description = "IAM role name given to Edge Lambda"
 }
