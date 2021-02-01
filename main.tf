@@ -113,7 +113,7 @@ resource "aws_cloudfront_distribution" "this" {
       content {
         event_type = var.lambda_cf_event_type
         // The lambda version number has to be supplied and LATEST cannot be used
-        lambda_arn = "${module.edge_lambda.lambda_arn}:${module.edge_lambda.lambda_version}"
+        lambda_arn = "${module.edge_lambda[0].lambda_arn}:${module.edge_lambda[0].lambda_version}"
       }
     }
 
@@ -153,7 +153,7 @@ resource "aws_lambda_permission" "allow_cloudfront" {
   count         = var.enable_custom_lambda ? 1 : 0
   statement_id  = "AllowExecutionFromCloudFront"
   action        = "lambda:GetFunction"
-  function_name = try(module.edge_lambda[0].lambda_name)
+  function_name = module.edge_lambda[0].lambda_name
   principal     = "edgelambda.amazonaws.com"
 
   depends_on = [module.edge_lambda]
