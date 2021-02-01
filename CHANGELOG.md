@@ -1,3 +1,10 @@
+# [1.5.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.4.0...v1.5.0) (2021-02-01)
+
+
+### Features
+
+* **lambda:** optional custom lambda ([b5b72cf](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/b5b72cf35a6a3aeb83acf207cb0a512a13c3202b))
+
 # [1.4.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.3.0...v1.4.0) (2021-01-18)
 
 
