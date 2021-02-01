@@ -132,8 +132,8 @@ variable "geo_restriction_locations" {
 //EDGE LAMBDA
 variable "enable_custom_lambda" {
   type        = bool
-  description = "Flag to allow creation of a custom edge lambda. If set to true the following - edge lambda related variables - will be required."
-  default     = false
+  description = "Flag to allow creation of a custom edge lambda. If set to false the following - edge lambda related variables - will be optional."
+  default     = true
 }
 
 variable "lambda_dist_dir" {
