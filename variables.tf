@@ -11,7 +11,7 @@ variable "domain" {
 
 // CloudFront distribution
 variable "custom_origin_mappings" {
-  type        = map(object({
+  type = map(object({
     origin_id       = string
     domain_name     = string
     path_pattern    = string
@@ -22,7 +22,7 @@ variable "custom_origin_mappings" {
 }
 
 variable "s3_origin_mappings" {
-  type        = map(object({
+  type = map(object({
     origin_id              = string
     domain_name            = string
     origin_access_identity = string
@@ -32,7 +32,7 @@ variable "s3_origin_mappings" {
 }
 
 variable "default_cache_behavior" {
-  type        = object({
+  type = object({
     origin_id       = string
     domain_name     = string
     static_backend  = bool
