@@ -11,7 +11,7 @@ variable "domain" {
 
 // CloudFront distribution
 variable "custom_origin_mappings" {
-  type = map(object({
+  type        = map(object({
     origin_id       = string
     domain_name     = string
     path_pattern    = string
@@ -22,7 +22,7 @@ variable "custom_origin_mappings" {
 }
 
 variable "s3_origin_mappings" {
-  type = map(object({
+  type        = map(object({
     origin_id              = string
     domain_name            = string
     origin_access_identity = string
@@ -32,7 +32,7 @@ variable "s3_origin_mappings" {
 }
 
 variable "default_cache_behavior" {
-  type = object({
+  type        = object({
     origin_id       = string
     domain_name     = string
     static_backend  = bool
@@ -130,29 +130,40 @@ variable "geo_restriction_locations" {
 }
 
 //EDGE LAMBDA
+variable "enable_custom_lambda" {
+  type        = bool
+  description = "Flag to allow creation of a custom edge lambda. If set to true the following - edge lambda related variables - will be required."
+  default     = false
+}
+
 variable "lambda_dist_dir" {
   type        = string
   description = "Directory of the lambda distribution which is to be published"
+  default     = ""
 }
 
 variable "lambda_runtimme" {
   type        = string
   description = "The runtime of the lambda"
+  default     = ""
 }
 
 variable "lambda_name_prefix" {
   type        = string
   description = "Name prefix to be given to the Lambda."
+  default     = ""
 }
 
 variable "lambda_handler" {
   type        = string
   description = "The lambda entry point"
+  default     = ""
 }
 
 variable "lambda_cf_event_type" {
   type        = string
   description = "When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'."
+  default     = ""
 }
 
 // TAGGING

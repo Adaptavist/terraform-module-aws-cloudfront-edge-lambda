@@ -108,10 +108,13 @@ resource "aws_cloudfront_distribution" "this" {
       }
     }
 
-    lambda_function_association {
-      event_type = var.lambda_cf_event_type
-      // The lambda version number has to be supplied and LATEST cannot be used
-      lambda_arn = "${module.edge_lambda.lambda_arn}:${module.edge_lambda.lambda_version}"
+    dynamic lambda_function_association {
+      for_each = var.enable_custom_lambda ? [1] : []
+      content {
+        event_type = var.lambda_cf_event_type
+        // The lambda version number has to be supplied and LATEST cannot be used
+        lambda_arn = "${module.edge_lambda.lambda_arn}:${module.edge_lambda.lambda_version}"
+      }
     }
 
     lambda_function_association {
@@ -147,6 +150,7 @@ resource "aws_cloudfront_distribution" "this" {
 }
 
 resource "aws_lambda_permission" "allow_cloudfront" {
+  count         = var.enable_custom_lambda ? 1 : 0
   statement_id  = "AllowExecutionFromCloudFront"
   action        = "lambda:GetFunction"
   function_name = module.edge_lambda.lambda_name
@@ -155,7 +159,9 @@ resource "aws_lambda_permission" "allow_cloudfront" {
   depends_on = [module.edge_lambda]
 }
 
+dynamic dd {}
 module "edge_lambda" {
+  count   = var.enable_custom_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
   version = "1.7.0"
 

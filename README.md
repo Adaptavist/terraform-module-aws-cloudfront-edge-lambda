@@ -17,11 +17,12 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | enable\_access\_logs | Should accesses to the CloudFront distribution be logged, defaults to false. | `bool` | `false` | no |
 | geo\_restriction\_locations | The ISO 3166-1-alpha-2 codes for which you want CloudFront either to allow or disallow content delivery. | `list(string)` | `[]` | no |
 | geo\_restriction\_type | The method that you want to use to restrict distribution of your content by country: 'none', 'whitelist', or 'blacklist'. Defaults to none. | `string` | `"none"` | no |
-| lambda\_cf\_event\_type | When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'. | `string` | n/a | yes |
-| lambda\_dist\_dir | Directory of the lambda distribution which is to be published | `string` | n/a | yes |
-| lambda\_handler | The lambda entry point | `string` | n/a | yes |
-| lambda\_name\_prefix | Name prefix to be given to the Lambda. | `string` | n/a | yes |
-| lambda\_runtimme | The runtime of the lambda | `string` | n/a | yes |
+| enable\_custom\_lambda | Flag that indicates the creation of a custom edge lambda. If set to true the following - edge lambda related variables - will be required. | `bool` | false | no |
+| lambda\_cf\_event\_type | When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'. | `string` | n/a | no |
+| lambda\_dist\_dir | Directory of the lambda distribution which is to be published | `string` | n/a | no |
+| lambda\_handler | The lambda entry point | `string` | n/a | no |
+| lambda\_name\_prefix | Name prefix to be given to the Lambda. | `string` | n/a | no |
+| lambda\_runtimme | The runtime of the lambda | `string` | n/a | no |
 | log\_cookies | If access logs are enabled, are cookies logged. | `bool` | `false` | no |
 | max\_ttl | Maximum TTL of objects in the cache. Set to 0 if you wish to disable caching. Defaults to 3600. | `number` | `86400` | no |
 | min\_ttl | Minimum TTL of objects in the cache. Defaults to 0. | `number` | `0` | no |
