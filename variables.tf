@@ -130,29 +130,40 @@ variable "geo_restriction_locations" {
 }
 
 //EDGE LAMBDA
+variable "enable_custom_lambda" {
+  type        = bool
+  description = "Flag to allow creation of a custom edge lambda. If set to false the following - edge lambda related variables - will be optional."
+  default     = true
+}
+
 variable "lambda_dist_dir" {
   type        = string
   description = "Directory of the lambda distribution which is to be published"
+  default     = ""
 }
 
 variable "lambda_runtimme" {
   type        = string
   description = "The runtime of the lambda"
+  default     = ""
 }
 
 variable "lambda_name_prefix" {
   type        = string
   description = "Name prefix to be given to the Lambda."
+  default     = ""
 }
 
 variable "lambda_handler" {
   type        = string
   description = "The lambda entry point"
+  default     = ""
 }
 
 variable "lambda_cf_event_type" {
   type        = string
   description = "When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'."
+  default     = ""
 }
 
 // TAGGING

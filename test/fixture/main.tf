@@ -78,6 +78,7 @@ module "cf_distro" {
     }
   }
 
+  enable_custom_lambda = true
   lambda_dist_dir      = "${path.module}/hello-world-lambda/"
   lambda_name_prefix   = "cloud-front-hello-world"
   lambda_cf_event_type = "origin-response"

@@ -17,6 +17,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | enable\_access\_logs | Should accesses to the CloudFront distribution be logged, defaults to false. | `bool` | `false` | no |
 | geo\_restriction\_locations | The ISO 3166-1-alpha-2 codes for which you want CloudFront either to allow or disallow content delivery. | `list(string)` | `[]` | no |
 | geo\_restriction\_type | The method that you want to use to restrict distribution of your content by country: 'none', 'whitelist', or 'blacklist'. Defaults to none. | `string` | `"none"` | no |
+| enable\_custom\_lambda | Flag that indicates the creation of a custom edge lambda. If set to false the following - edge lambda related variables - will be optional. | `bool` | true | no |
 | lambda\_cf\_event\_type | When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'. | `string` | n/a | yes |
 | lambda\_dist\_dir | Directory of the lambda distribution which is to be published | `string` | n/a | yes |
 | lambda\_handler | The lambda entry point | `string` | n/a | yes |

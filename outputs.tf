@@ -29,7 +29,6 @@ output "cf_hosted_zone_id" {
 }
 
 output "lambda_role_name" {
-  value       = module.edge_lambda.lambda_role_name
+  value       = try(module.edge_lambda[0].lambda_role_name, "")
   description = "IAM role name given to Edge Lambda"
 }
-
