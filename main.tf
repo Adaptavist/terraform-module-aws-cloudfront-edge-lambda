@@ -159,7 +159,6 @@ resource "aws_lambda_permission" "allow_cloudfront" {
   depends_on = [module.edge_lambda]
 }
 
-dynamic dd {}
 module "edge_lambda" {
   count   = var.enable_custom_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
