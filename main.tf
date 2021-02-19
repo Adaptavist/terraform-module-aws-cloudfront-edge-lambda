@@ -108,7 +108,7 @@ resource "aws_cloudfront_distribution" "this" {
       }
     }
 
-    dynamic lambda_function_association {
+    dynamic "lambda_function_association" {
       for_each = var.enable_custom_lambda ? [1] : []
       content {
         event_type = var.lambda_cf_event_type
@@ -169,7 +169,7 @@ module "edge_lambda" {
   lambda_code_dir = var.lambda_dist_dir
   handler         = var.lambda_handler
   runtime         = var.lambda_runtimme
-  timeout         = "3"
+  timeout         = var.hsts_lambda_timeout
   publish_lambda  = true
 
   namespace = var.namespace
