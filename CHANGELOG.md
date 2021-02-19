@@ -1,3 +1,10 @@
+# [1.6.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.5.0...v1.6.0) (2021-02-19)
+
+
+### Features
+
+* increased HSTS header timeout and added variable ([0fbafbd](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/0fbafbd64f7671b216b3b1822b3cea89ac0b5703))
+
 # [1.5.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.4.0...v1.5.0) (2021-02-01)
 
 
