@@ -186,3 +186,9 @@ variable "tags" {
   type        = map(any)
   description = "Tags applied to the distribution, these should follow what is defined [here](https://github.com/Adaptavist/terraform-compliance/blob/master/features/tags.feature)."
 }
+
+variable "hsts_lambda_timeout" {
+  type        = string
+  default     = "15"
+  description = "The lambda time out applied to the hsts edge lambda, this timeout includes the time taken for the origin to respond"
+}
