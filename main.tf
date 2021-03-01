@@ -188,7 +188,7 @@ resource "aws_lambda_permission" "hsts_header_lambda_permission" {
 
 module "hsts_header_edge_lambda" {
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.7.0"
+  version = "1.8.1"
 
   function_name   = "hsts-header-${random_string.random.result}"
   description     = "An edge lambda which ensure the HSTS header is present for the domain ${var.domain}"
