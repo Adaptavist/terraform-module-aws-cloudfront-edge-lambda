@@ -1,3 +1,10 @@
+## [1.6.1](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.6.0...v1.6.1) (2021-03-01)
+
+
+### Bug Fixes
+
+* using newer version of lambda module ([70cc93a](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/70cc93af468d829c218c1ddcdf1dead449425d01))
+
 # [1.6.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.5.0...v1.6.0) (2021-02-19)
 
 
