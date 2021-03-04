@@ -162,7 +162,7 @@ resource "aws_lambda_permission" "allow_cloudfront" {
 module "edge_lambda" {
   count   = var.enable_custom_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.7.0"
+  version = "1.8.1"
 
   function_name   = "${var.lambda_name_prefix}-${random_string.random.result}"
   description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
