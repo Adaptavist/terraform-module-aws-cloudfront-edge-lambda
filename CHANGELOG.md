@@ -1,3 +1,10 @@
+# [1.7.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.6.1...v1.7.0) (2021-03-15)
+
+
+### Features
+
+* added include body var ([caa2e44](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/caa2e442fcdfd966a74a1f95c8c97e159402490a))
+
 ## [1.6.1](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.6.0...v1.6.1) (2021-03-01)
 
 
