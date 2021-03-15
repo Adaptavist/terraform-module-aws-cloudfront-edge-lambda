@@ -166,6 +166,12 @@ variable "lambda_cf_event_type" {
   default     = ""
 }
 
+variable "lambda_cf_include_body" {
+  type        = bool
+  description = "When set to true it exposes the request body to the lambda function"
+  default     = false
+}
+
 // TAGGING
 variable "namespace" {
   type        = string

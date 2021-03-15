@@ -113,14 +113,16 @@ resource "aws_cloudfront_distribution" "this" {
       content {
         event_type = var.lambda_cf_event_type
         // The lambda version number has to be supplied and LATEST cannot be used
-        lambda_arn = "${module.edge_lambda[0].lambda_arn}:${module.edge_lambda[0].lambda_version}"
+        lambda_arn   = "${module.edge_lambda[0].lambda_arn}:${module.edge_lambda[0].lambda_version}"
+        include_body = var.lambda_cf_include_body
       }
     }
 
     lambda_function_association {
       event_type = "viewer-response"
       // The lambda version number has to be supplied and LATEST cannot be used
-      lambda_arn = "${module.hsts_header_edge_lambda.lambda_arn}:${module.hsts_header_edge_lambda.lambda_version}"
+      lambda_arn   = "${module.hsts_header_edge_lambda.lambda_arn}:${module.hsts_header_edge_lambda.lambda_version}"
+      include_body = false
     }
 
     min_ttl     = var.min_ttl

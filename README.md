@@ -4,7 +4,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 
 ## Variables
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | access\_logs\_bucket | If access logs are enabled the bucket the logs should go into, defaults to false. | `string` | `""` | no |
 | acm\_cert\_arn | AWS ACM certificate ARN to use for the CloudFront distribution. | `string` | n/a | yes |
 | aliases | Aliases used by the CloudFront distribution. | `list(string)` | `[]` | no |
@@ -20,6 +20,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | geo\_restriction\_type | The method that you want to use to restrict distribution of your content by country: 'none', 'whitelist', or 'blacklist'. Defaults to none. | `string` | `"none"` | no |
 | hsts\_lambda\_timeout | The lambda time out applied to the hsts edge lambda, this timeout includes the time taken for the origin to respond | `string` | `"15"` | no |
 | lambda\_cf\_event\_type | When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'. | `string` | `""` | no |
+| lambda\_cf\_include\_body | When set to true it exposes the request body to the lambda function | `bool` | `false` | no |
 | lambda\_dist\_dir | Directory of the lambda distribution which is to be published | `string` | `""` | no |
 | lambda\_handler | The lambda entry point | `string` | `""` | no |
 | lambda\_name\_prefix | Name prefix to be given to the Lambda. | `string` | `""` | no |
@@ -36,7 +37,6 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | tags | Tags applied to the distribution, these should follow what is defined [here](https://github.com/Adaptavist/terraform-compliance/blob/master/features/tags.feature). | `map(any)` | n/a | yes |
 | viewer\_protocol\_policy | Default viewer\_protocol\_policy for the CloudFront distribution, this defaults to 'redirect-to-https'. | `string` | `"redirect-to-https"` | no |
 | wait\_for\_deployment | Specifies if Terrafrom should wait for deployments to complete before returning. Defaults to true. | `bool` | `true` | no |
-
 
 
 # custom_origin_mappings object
