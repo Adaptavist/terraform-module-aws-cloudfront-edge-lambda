@@ -1,3 +1,10 @@
+# [1.8.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.7.0...v1.8.0) (2021-03-17)
+
+
+### Features
+
+* added lambda memory variable ([4f9df6c](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/4f9df6cd2db158b90c973e72b3021e7070e0479a))
+
 # [1.7.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.6.1...v1.7.0) (2021-03-15)
 
 
