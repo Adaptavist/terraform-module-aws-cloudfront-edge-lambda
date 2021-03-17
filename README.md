@@ -23,6 +23,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | lambda\_cf\_include\_body | When set to true it exposes the request body to the lambda function | `bool` | `false` | no |
 | lambda\_dist\_dir | Directory of the lambda distribution which is to be published | `string` | `""` | no |
 | lambda\_handler | The lambda entry point | `string` | `""` | no |
+| lambda\_memory\_size | How much memory to give the lambda | `string` | `"128"` | no |
 | lambda\_name\_prefix | Name prefix to be given to the Lambda. | `string` | `""` | no |
 | lambda\_runtimme | The runtime of the lambda | `string` | `""` | no |
 | log\_cookies | If access logs are enabled, are cookies logged. | `bool` | `false` | no |

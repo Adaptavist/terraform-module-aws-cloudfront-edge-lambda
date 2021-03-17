@@ -160,6 +160,12 @@ variable "lambda_handler" {
   default     = ""
 }
 
+variable "lambda_memory_size" {
+  type        = string
+  description = "How much memory to give the lambda"
+  default     = "128"
+}
+
 variable "lambda_cf_event_type" {
   type        = string
   description = "When to trigger the Lambda: 'viewer-request', 'origin-request', 'viewer-response', 'origin-response'."
