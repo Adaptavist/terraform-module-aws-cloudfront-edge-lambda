@@ -172,7 +172,9 @@ module "edge_lambda" {
   handler         = var.lambda_handler
   runtime         = var.lambda_runtimme
   timeout         = var.hsts_lambda_timeout
-  publish_lambda  = true
+  memory_size     = var.lambda_memory_size
+
+  publish_lambda = true
 
   namespace = var.namespace
   stage     = var.stage
