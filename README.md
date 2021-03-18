@@ -38,7 +38,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | tags | Tags applied to the distribution, these should follow what is defined [here](https://github.com/Adaptavist/terraform-compliance/blob/master/features/tags.feature). | `map(any)` | n/a | yes |
 | viewer\_protocol\_policy | Default viewer\_protocol\_policy for the CloudFront distribution, this defaults to 'redirect-to-https'. | `string` | `"redirect-to-https"` | no |
 | wait\_for\_deployment | Specifies if Terrafrom should wait for deployments to complete before returning. Defaults to true. | `bool` | `true` | no |
-
+| origin_read_timeout | The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60. | `number` | `30` | no |
 
 # custom_origin_mappings object
 | Name                        | Description                                                                                     |
