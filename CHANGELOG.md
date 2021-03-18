@@ -1,3 +1,10 @@
+## [1.8.1](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.0...v1.8.1) (2021-03-18)
+
+
+### Bug Fixes
+
+* optionally set origin read timeout ([e76d99c](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/e76d99cd662a511117f9caf7ed1645cd0bea01ae))
+
 # [1.8.0](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.7.0...v1.8.0) (2021-03-17)
 
 
