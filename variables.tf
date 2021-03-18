@@ -204,3 +204,9 @@ variable "hsts_lambda_timeout" {
   default     = "15"
   description = "The lambda time out applied to the hsts edge lambda, this timeout includes the time taken for the origin to respond"
 }
+
+variable "origin_read_timeout" {
+  type        = number
+  default     = 30
+  description = "The Custom Read timeout, in seconds. By default, AWS enforces a limit of 60"
+}
