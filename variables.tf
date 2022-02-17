@@ -12,10 +12,8 @@ variable "domain" {
 // CloudFront distribution
 variable "custom_origin_mappings" {
   type = map(object({
-    origin_id       = string
-    domain_name     = string
-    path_pattern    = string
-    allowed_methods = list(string)
+    origin_id   = string
+    domain_name = string
   }))
   default     = {}
   description = "Custom origin mappings. Can be used in conjunction with S3 origin mappings Defaults to an empty map."
@@ -203,6 +201,12 @@ variable "hsts_lambda_timeout" {
   type        = string
   default     = "15"
   description = "The lambda time out applied to the hsts edge lambda, this timeout includes the time taken for the origin to respond"
+}
+
+variable "enable_hsts_lambda" {
+  type        = bool
+  default     = false
+  description = "Whether to deploy the edge lambda that adds in an HSTS header on response"
 }
 
 variable "origin_read_timeout" {

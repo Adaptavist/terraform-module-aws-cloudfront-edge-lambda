@@ -165,7 +165,7 @@ resource "aws_lambda_permission" "allow_cloudfront" {
 module "edge_lambda" {
   count   = var.enable_custom_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.8.1"
+  version = "1.12.0"
 
   function_name   = "${var.lambda_name_prefix}-${random_string.random.result}"
   description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
@@ -192,8 +192,9 @@ resource "aws_lambda_permission" "hsts_header_lambda_permission" {
 }
 
 module "hsts_header_edge_lambda" {
+  count   = var.enable_hsts_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.8.1"
+  version = "1.12.0"
 
   function_name   = "hsts-header-${random_string.random.result}"
   description     = "An edge lambda which ensure the HSTS header is present for the domain ${var.domain}"
