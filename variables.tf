@@ -182,6 +182,11 @@ variable "namespace" {
   description = "The namespace of the distribution."
 }
 
+variable "aws_region" {
+  type        = string
+  description = "The region to deploy the lambda into."
+}
+
 variable "stage" {
   type        = string
   description = "The stage of the distribution - (dev, staging etc)."

@@ -177,9 +177,10 @@ module "edge_lambda" {
 
   publish_lambda = true
 
-  namespace = var.namespace
-  stage     = var.stage
-  tags      = module.labels.tags
+  aws_region = var.aws_region
+  namespace  = var.namespace
+  stage      = var.stage
+  tags       = module.labels.tags
 }
 
 resource "aws_lambda_permission" "hsts_header_lambda_permission" {
@@ -204,8 +205,9 @@ module "hsts_header_edge_lambda" {
   timeout         = "3"
   publish_lambda  = true
 
-  namespace = var.namespace
-  stage     = var.stage
-  tags      = module.labels.tags
+  aws_region = var.aws_region
+  namespace  = var.namespace
+  stage      = var.stage
+  tags       = module.labels.tags
 
 }
