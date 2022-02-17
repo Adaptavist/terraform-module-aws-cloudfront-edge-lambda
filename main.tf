@@ -119,11 +119,14 @@ resource "aws_cloudfront_distribution" "this" {
       }
     }
 
-    lambda_function_association {
-      event_type = "viewer-response"
-      // The lambda version number has to be supplied and LATEST cannot be used
-      lambda_arn   = "${module.hsts_header_edge_lambda.lambda_arn}:${module.hsts_header_edge_lambda.lambda_version}"
-      include_body = false
+    dynamic "lambda_function_association" {
+      for_each = var.enable_hsts_lambda ? [1] : []
+      content {
+        event_type = "viewer-response"
+        // The lambda version number has to be supplied and LATEST cannot be used
+        lambda_arn   = "${module.hsts_header_edge_lambda[0].lambda_arn}:${module.hsts_header_edge_lambda[0].lambda_version}"
+        include_body = false
+      }
     }
 
     min_ttl     = var.min_ttl
@@ -184,9 +187,10 @@ module "edge_lambda" {
 }
 
 resource "aws_lambda_permission" "hsts_header_lambda_permission" {
+  count         = var.enable_hsts_lambda ? 1 : 0
   statement_id  = "AllowExecutionFromCloudFront"
   action        = "lambda:GetFunction"
-  function_name = module.hsts_header_edge_lambda.lambda_name
+  function_name = module.hsts_header_edge_lambda[0].lambda_name
   principal     = "edgelambda.amazonaws.com"
 
   depends_on = [module.hsts_header_edge_lambda]
