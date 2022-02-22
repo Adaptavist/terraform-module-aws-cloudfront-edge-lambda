@@ -19,7 +19,7 @@ func destroyInfra(terraformOptions *terraform.Options, t *testing.T) {
 		Then when Terraform destroys the CloudFront distro the Lambdas will get cleaned up as part of that.
 	*/
 	terraform.RunTerraformCommand(t, terraformOptions, "state", "rm", "module.cf_distro.module.edge_lambda[0].aws_lambda_function.this")
-	terraform.RunTerraformCommand(t, terraformOptions, "state", "rm", "module.cf_distro.module.hsts_header_edge_lambda.aws_lambda_function.this")
+	terraform.RunTerraformCommand(t, terraformOptions, "state", "rm", "module.cf_distro.module.hsts_header_edge_lambda[0].aws_lambda_function.this")
 
 	terraform.Destroy(t, terraformOptions)
 }
