@@ -1,3 +1,11 @@
+## [1.8.2](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.1...v1.8.2) (2022-02-22)
+
+
+### Bug Fixes
+
+* handle making hsts lambda optional ([201e118](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/201e1187063b337b14165abab023649b8eeff7ad))
+* update request path in tests ([f42569f](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/f42569f3ee28c81e86e992576fb6a3b11b6baacb))
+
 ## [1.8.1](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.0...v1.8.1) (2021-03-18)
 
 
