@@ -119,11 +119,14 @@ resource "aws_cloudfront_distribution" "this" {
       }
     }
 
-    lambda_function_association {
-      event_type = "viewer-response"
-      // The lambda version number has to be supplied and LATEST cannot be used
-      lambda_arn   = "${module.hsts_header_edge_lambda.lambda_arn}:${module.hsts_header_edge_lambda.lambda_version}"
-      include_body = false
+    dynamic "lambda_function_association" {
+      for_each = var.enable_hsts_lambda ? [1] : []
+      content {
+        event_type = "viewer-response"
+        // The lambda version number has to be supplied and LATEST cannot be used
+        lambda_arn   = "${module.hsts_header_edge_lambda[0].lambda_arn}:${module.hsts_header_edge_lambda[0].lambda_version}"
+        include_body = false
+      }
     }
 
     min_ttl     = var.min_ttl
@@ -165,7 +168,7 @@ resource "aws_lambda_permission" "allow_cloudfront" {
 module "edge_lambda" {
   count   = var.enable_custom_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.8.1"
+  version = "1.12.0"
 
   function_name   = "${var.lambda_name_prefix}-${random_string.random.result}"
   description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
@@ -177,23 +180,26 @@ module "edge_lambda" {
 
   publish_lambda = true
 
-  namespace = var.namespace
-  stage     = var.stage
-  tags      = module.labels.tags
+  aws_region = var.aws_region
+  namespace  = var.namespace
+  stage      = var.stage
+  tags       = module.labels.tags
 }
 
 resource "aws_lambda_permission" "hsts_header_lambda_permission" {
+  count         = var.enable_hsts_lambda ? 1 : 0
   statement_id  = "AllowExecutionFromCloudFront"
   action        = "lambda:GetFunction"
-  function_name = module.hsts_header_edge_lambda.lambda_name
+  function_name = module.hsts_header_edge_lambda[0].lambda_name
   principal     = "edgelambda.amazonaws.com"
 
   depends_on = [module.hsts_header_edge_lambda]
 }
 
 module "hsts_header_edge_lambda" {
+  count   = var.enable_hsts_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.8.1"
+  version = "1.12.0"
 
   function_name   = "hsts-header-${random_string.random.result}"
   description     = "An edge lambda which ensure the HSTS header is present for the domain ${var.domain}"
@@ -203,8 +209,9 @@ module "hsts_header_edge_lambda" {
   timeout         = "3"
   publish_lambda  = true
 
-  namespace = var.namespace
-  stage     = var.stage
-  tags      = module.labels.tags
+  aws_region = var.aws_region
+  namespace  = var.namespace
+  stage      = var.stage
+  tags       = module.labels.tags
 
 }

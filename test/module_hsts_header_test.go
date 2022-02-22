@@ -34,11 +34,11 @@ func TestHeaderModule(t *testing.T) {
 
 	desiredResponseHeaders := map[string][]string{
 		"Strict-Transport-Security": {"max-age=31536000"},
-		"Message": {"hello-world"},
+		"Message":                   {"hello-world"},
 	}
 
 	// Hit CF distro and make sure we get correct response
-	testBodyAndHeader("\"baseUrl\":\"https://sr-cloud-test.connect.adaptavist.com\"", "https://"+publicDomainName+"/sr-dispatcher/jira/atlassian-connect.json", defaultHeaders, desiredResponseHeaders, t)
+	testBodyAndHeader("\"baseUrl\":\"https://avst-stg.connect.adaptavist.com\"", "https://"+publicDomainName+"/es-service/atlassian-connect.json", defaultHeaders, desiredResponseHeaders, t)
 }
 
 func testBodyAndHeader(testValue string, testURL string, requestHeaders map[string][]string, desiredResponseHeaders map[string][]string, t *testing.T) {

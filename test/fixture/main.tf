@@ -78,6 +78,7 @@ module "cf_distro" {
     }
   }
 
+  enable_hsts_lambda   = true
   enable_custom_lambda = true
   lambda_dist_dir      = "${path.module}/hello-world-lambda/"
   lambda_name_prefix   = "cloud-front-hello-world"
@@ -87,6 +88,7 @@ module "cf_distro" {
   default_ttl = 0
   max_ttl     = 0
 
+  aws_region      = "us-west-2"
   domain          = local.domain
   r53_zone_name   = local.tld
   lambda_handler  = "app.handler"
