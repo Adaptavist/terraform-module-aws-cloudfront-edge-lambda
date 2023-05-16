@@ -1,3 +1,10 @@
+## [1.8.3](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.2...v1.8.3) (2023-05-16)
+
+
+### Bug Fixes
+
+* update labels module ([61f6591](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/61f65913f36f1f97906509e01cc41d218bf77e19))
+
 ## [1.8.2](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.1...v1.8.2) (2022-02-22)
 
 
