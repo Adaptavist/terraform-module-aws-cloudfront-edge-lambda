@@ -213,5 +213,4 @@ module "hsts_header_edge_lambda" {
   namespace  = var.namespace
   stage      = var.stage
   tags       = module.labels.tags
-
 }
