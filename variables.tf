@@ -172,7 +172,7 @@ variable "lambda_cf_event_type" {
 
 variable "lambda_cf_include_body" {
   type        = bool
-  description = "When set to true it exposes the request body to the lambda function"
+  description = "When set to true it exposes the request body to the lambda function."
   default     = false
 }
 
