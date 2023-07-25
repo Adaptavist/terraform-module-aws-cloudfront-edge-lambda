@@ -17,6 +17,12 @@ module "labels" {
   tags      = var.tags
 }
 
+moved {
+  from = module.hsts_header_edge_lambda
+  to   = module.hsts_header_edge_lambda[0]
+}
+
+
 resource "random_string" "random" {
   length  = 6
   special = false
@@ -168,13 +174,13 @@ resource "aws_lambda_permission" "allow_cloudfront" {
 module "edge_lambda" {
   count   = var.enable_custom_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.12.0"
+  version = "1.34.0"
 
   function_name   = "${var.lambda_name_prefix}-${random_string.random.result}"
   description     = "An edge lambda which is attached to the CF distribution ${var.domain}"
   lambda_code_dir = var.lambda_dist_dir
   handler         = var.lambda_handler
-  runtime         = var.lambda_runtimme
+  runtime         = var.lambda_runtime
   timeout         = var.hsts_lambda_timeout
   memory_size     = var.lambda_memory_size
 
@@ -199,13 +205,13 @@ resource "aws_lambda_permission" "hsts_header_lambda_permission" {
 module "hsts_header_edge_lambda" {
   count   = var.enable_hsts_lambda ? 1 : 0
   source  = "Adaptavist/aws-lambda/module"
-  version = "1.12.0"
+  version = "1.34.0"
 
   function_name   = "hsts-header-${random_string.random.result}"
   description     = "An edge lambda which ensure the HSTS header is present for the domain ${var.domain}"
   lambda_code_dir = "${path.module}/lambda/hsts-header/"
   handler         = "app.handler"
-  runtime         = "nodejs12.x"
+  runtime         = "nodejs18.x"
   timeout         = "3"
   publish_lambda  = true
 

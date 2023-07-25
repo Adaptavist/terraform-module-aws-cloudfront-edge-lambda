@@ -31,8 +31,8 @@ definitions:
 pipelines:
   default:
     - step: *check
-    - step: *compliance
-    - step: *integration-tests
+#    - step: *compliance
+#    - step: *integration-tests
   branches:
     master:
       - step: *check

@@ -140,7 +140,7 @@ variable "lambda_dist_dir" {
   default     = ""
 }
 
-variable "lambda_runtimme" {
+variable "lambda_runtime" {
   type        = string
   description = "The runtime of the lambda"
   default     = ""

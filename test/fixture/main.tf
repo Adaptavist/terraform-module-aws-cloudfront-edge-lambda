@@ -88,9 +88,9 @@ module "cf_distro" {
   default_ttl = 0
   max_ttl     = 0
 
-  aws_region      = "us-west-2"
-  domain          = local.domain
-  r53_zone_name   = local.tld
-  lambda_handler  = "app.handler"
-  lambda_runtimme = "nodejs12.x"
+  aws_region     = "us-west-2"
+  domain         = local.domain
+  r53_zone_name  = local.tld
+  lambda_handler = "app.handler"
+  lambda_runtime = "nodejs18.x"
 }
