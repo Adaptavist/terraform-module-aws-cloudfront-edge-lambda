@@ -1,3 +1,10 @@
+## [1.8.6](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.5...v1.8.6) (2023-08-01)
+
+
+### Bug Fixes
+
+* nodejs upgrade to aws-lambda ([a648901](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/a64890121386f8f8f605920c9889548a855f2cdd))
+
 ## [1.8.5](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.4...v1.8.5) (2023-05-19)
 
 
