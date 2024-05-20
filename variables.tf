@@ -23,7 +23,6 @@ variable "s3_origin_mappings" {
   type = map(object({
     origin_id                = string
     domain_name              = string
-    origin_access_identity   = string
     origin_access_control_id = string
 
   }))
