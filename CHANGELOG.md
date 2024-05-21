@@ -1,3 +1,11 @@
+## [1.8.7](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.6...v1.8.7) (2024-05-21)
+
+
+### Bug Fixes
+
+* adding parameters to allow OAC to be managed via module ([058c6fb](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/058c6fb2bd0811a8f241dc4d47b1564eaf733ebb))
+* removing origin access identity from the origin mappings string, as it's deprecated ([fe169ea](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/fe169ea14f4f27e11a6ef6c09e6d637fb0d46e00))
+
 ## [1.8.6](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.5...v1.8.6) (2023-08-01)
 
 
