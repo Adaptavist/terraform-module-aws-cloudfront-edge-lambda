@@ -1,3 +1,10 @@
+## [1.8.8](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.7...v1.8.8) (2024-06-03)
+
+
+### Bug Fixes
+
+* issue with cloudfront redeploying on every apply ([bc1c24c](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/commits/bc1c24c38eb961d55d8075e7bbd23cdbc04a2a06))
+
 ## [1.8.7](http://bitbucket.org/adaptavistlabs/module-aws-cloudfront-edge-lambda/compare/v1.8.6...v1.8.7) (2024-05-21)
 
 
