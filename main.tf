@@ -74,10 +74,6 @@ resource "aws_cloudfront_distribution" "this" {
       domain_name              = origin.value.domain_name
       origin_id                = origin.value.origin_id
       origin_access_control_id = origin.value.origin_access_control_id
-
-      s3_origin_config {
-        origin_access_identity = ""
-      }
     }
   }
 

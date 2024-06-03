@@ -33,7 +33,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | namespace | The namespace of the distribution. | `string` | n/a | yes |
 | origin\_protocol\_policy | Default origin\_protocol\_policy for the CloudFront distribution, this defaults to 'https-only'. | `string` | `"https-only"` | no |
 | r53\_zone\_name | Name of the public hosted zone, this is used for creating the A record for the CloudFront distro. | `string` | n/a | yes |
-| s3\_origin\_mappings | S3 origin mappings. Can be used in conjunction with custom origin mappings Defaults to an empty map. | <pre>map(object({<br>    origin_id              = string<br>    domain_name            = string<br>    origin_access_identity = string<br>  }))</pre> | `{}` | no |
+| s3\_origin\_mappings | S3 origin mappings. Can be used in conjunction with custom origin mappings Defaults to an empty map. | <pre>map(object({<br>    origin_id              = string<br>    domain_name            = string<br>    origin_access_control_id = string<br>  }))</pre> | `{}` | no |
 | stage | The stage of the distribution - (dev, staging etc). | `string` | n/a | yes |
 | tags | Tags applied to the distribution, these should follow what is defined [here](https://github.com/Adaptavist/terraform-compliance/blob/master/features/tags.feature). | `map(any)` | n/a | yes |
 | viewer\_protocol\_policy | Default viewer\_protocol\_policy for the CloudFront distribution, this defaults to 'redirect-to-https'. | `string` | `"redirect-to-https"` | no |
@@ -53,7 +53,7 @@ A module which creates a CloudFront distribution which has an Edge Lambda attach
 | --------------------------- | ----------------------------------------------------------------------------------------------- |
 | origin_id                 | The user defined unique id of the origin.                                      |
 | domain_name | The domain name of the origin. |
-| origin_access_identity | The CloudFront origin access identity to associate with the origin. |
+| origin_access_control_id | The CloudFront origin access control id to associate with the origin. |
 
 # default_cache_behavior
 | Name                        | Description                                                                                     |
